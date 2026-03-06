@@ -214,8 +214,8 @@
 </head>
 <body>
 
-    <audio id="bgMusic" loop>
-        <source src="River Flows In You.mp3" type="audio/mpeg">
+    <audio id="bgMusic" loop autoplay preload="auto">
+        <source src="Aesthetic.mp3" type="audio/mpeg">
     </audio>
 
     <div id="decor-wrap">
@@ -368,7 +368,6 @@
         const bgMusic = document.getElementById('bgMusic');
         let currentStep = 0; 
         let isAnimating = false; 
-        let musicStarted = false; // Biến kiểm tra nhạc đã phát chưa
 
         function scrollToTop() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -399,10 +398,10 @@
         }
 
         document.body.addEventListener('click', function(e) {
-            // PHÁT NHẠC Ở LẦN CLICK ĐẦU TIÊN
-            if (!musicStarted) {
-                bgMusic.play().catch(error => console.log("Trình duyệt chặn autoplay:", error));
-                musicStarted = true;
+            // Backup trong trường hợp trình duyệt chặn autoplay: 
+            // Ở lần click đầu tiên bất kỳ đâu, hệ thống sẽ gọi hàm play() để nhạc kêu lên
+            if (bgMusic.paused) {
+                bgMusic.play().catch(error => console.log("Lỗi phát nhạc:", error));
             }
 
             if (isAnimating) return;
