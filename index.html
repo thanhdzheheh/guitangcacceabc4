@@ -29,6 +29,32 @@
             z-index: 10;
         }
 
+        /* KHU VỰC NÚT BẬT/TẮT NHẠC Ở GÓC PHẢI TRÊN */
+        #music-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 45px;
+            height: 45px;
+            background-color: #fff0f5;
+            border: 2px solid #ff9fa8;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 1000; /* Đảm bảo luôn nằm trên cùng */
+            box-shadow: 0 4px 10px rgba(255, 159, 168, 0.3);
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        #music-toggle:hover {
+            transform: scale(1.1);
+            background-color: #ff9fa8;
+        }
+
         /* Class dùng chung cho các màn hình (slide) */
         .slide-step {
             display: none; 
@@ -45,7 +71,7 @@
         .click-hint {
             margin-top: 30px;
             font-size: 1.2rem;
-            color: #ffb6c1; /* Chữ hồng */
+            color: #ffb6c1; 
             animation: pulse 2s infinite;
             cursor: pointer;
         }
@@ -55,8 +81,8 @@
             border: 3px dashed #ff9fa8;
             border-radius: 20px;
             padding: 15px 30px;
-            background-color: #ffffff; /* Đổi về nền trắng */
-            box-shadow: 0 10px 25px rgba(255, 159, 168, 0.15); /* Bóng hồng rất nhẹ */
+            background-color: #ffffff; 
+            box-shadow: 0 10px 25px rgba(255, 159, 168, 0.15); 
             margin-bottom: 15px;
             max-width: 1000px;
             opacity: 0;
@@ -67,7 +93,7 @@
         .calligraphy-title {
             font-family: 'Dancing Script', cursive;
             font-size: clamp(3.5rem, 8vw, 8.5rem); 
-            color: #ff9fa8; /* Chữ hồng */
+            color: #ff9fa8; 
             text-shadow: 2px 2px 8px rgba(255, 159, 168, 0.3);
             line-height: 1.3;
             opacity: 0;
@@ -78,7 +104,7 @@
         .question-title {
             font-family: 'Dancing Script', cursive;
             font-size: clamp(1.8rem, 5vw, 4rem); 
-            color: #ff758c; /* Chữ hồng đậm hơn chút cho dễ đọc */
+            color: #ff758c; 
             line-height: 1.4;
         }
 
@@ -132,7 +158,7 @@
         .option-item:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 15px rgba(255, 159, 168, 0.3);
-            background-color: #fff0f5; /* Lúc di chuột vào hơi ửng hồng chút xíu */
+            background-color: #fff0f5; 
         }
 
         /* Trạng thái ĐÚNG / SAI */
@@ -163,7 +189,7 @@
             animation: slideUp 0.5s ease forwards;
         }
 
-        /* Nút Tiếp theo (Nền trắng, viền hồng, chữ hồng) */
+        /* Nút Tiếp theo */
         .next-btn {
             margin-top: 15px;
             margin-bottom: 20px;
@@ -185,7 +211,7 @@
         .next-btn:hover {
             transform: scale(1.1);
             background-color: #ff758c;
-            color: #ffffff; /* Hover vào thì đảo ngược màu cho nổi bật */
+            color: #ffffff; 
         }
 
         /* Animation chuyển cảnh */
@@ -220,6 +246,8 @@
     <audio id="bgMusic" loop autoplay preload="auto">
         <source src="Aesthetic.mp3" type="audio/mpeg">
     </audio>
+
+    <div id="music-toggle" title="Bật/Tắt nhạc">🎵</div>
 
     <div id="decor-wrap">
         <div class="decor d1">🌸</div> <div class="decor d2">✨</div> <div class="decor d3">💗</div>
@@ -369,8 +397,26 @@
     <script>
         const slides = document.querySelectorAll('.slide-step');
         const bgMusic = document.getElementById('bgMusic');
+        const musicToggle = document.getElementById('music-toggle');
+        
         let currentStep = 0; 
         let isAnimating = false; 
+        let userMuted = false; // Biến kiểm tra xem user có chủ động tắt nhạc không
+
+        // HÀM: XỬ LÝ SỰ KIỆN CLICK VÀO NÚT NHẠC
+        musicToggle.addEventListener('click', function(e) {
+            e.stopPropagation(); // Ngăn việc click nút này làm chuyển sang câu hỏi khác
+            
+            if (bgMusic.paused) {
+                bgMusic.play();
+                musicToggle.innerHTML = '🎵';
+                userMuted = false;
+            } else {
+                bgMusic.pause();
+                musicToggle.innerHTML = '🔇';
+                userMuted = true;
+            }
+        });
 
         function scrollToTop() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -400,10 +446,12 @@
             }, 800);
         }
 
+        // HÀM: XỬ LÝ CLICK TRÊN TOÀN MÀN HÌNH
         document.body.addEventListener('click', function(e) {
-            // Backup trong trường hợp trình duyệt chặn autoplay: 
-            if (bgMusic.paused) {
+            // Nếu người chơi chưa từng tự tay bấm nút tắt âm, thì lần click đầu tiên sẽ cố gắng phát nhạc
+            if (bgMusic.paused && !userMuted) {
                 bgMusic.play().catch(error => console.log("Lỗi phát nhạc:", error));
+                musicToggle.innerHTML = '🎵'; 
             }
 
             if (isAnimating) return;
