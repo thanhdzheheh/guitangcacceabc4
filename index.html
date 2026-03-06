@@ -11,7 +11,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: #ffffff;
+            background-color: #ffffff; /* Nền trắng tinh */
             min-height: 100vh;
             overflow-x: hidden; 
             overflow-y: auto;   
@@ -41,22 +41,22 @@
             position: relative; 
         }
 
-        /* Dòng chữ phụ "Click để tiếp tục" cho các slide kể chuyện */
+        /* Dòng chữ phụ "Click để tiếp tục" */
         .click-hint {
             margin-top: 30px;
             font-size: 1.2rem;
-            color: #ffb6c1;
+            color: #ffb6c1; /* Chữ hồng */
             animation: pulse 2s infinite;
             cursor: pointer;
         }
 
-        /* KHUNG VIỀN CÂU HỎI */
+        /* KHUNG VIỀN CÂU HỎI (Nền trắng, viền hồng) */
         .question-box {
             border: 3px dashed #ff9fa8;
             border-radius: 20px;
             padding: 15px 30px;
-            background: rgba(255, 240, 245, 0.7);
-            box-shadow: 0 10px 25px rgba(255, 159, 168, 0.2);
+            background-color: #ffffff; /* Đổi về nền trắng */
+            box-shadow: 0 10px 25px rgba(255, 159, 168, 0.15); /* Bóng hồng rất nhẹ */
             margin-bottom: 15px;
             max-width: 1000px;
             opacity: 0;
@@ -67,8 +67,8 @@
         .calligraphy-title {
             font-family: 'Dancing Script', cursive;
             font-size: clamp(3.5rem, 8vw, 8.5rem); 
-            color: #ff9fa8; 
-            text-shadow: 3px 3px 15px rgba(255, 159, 168, 0.5), -1px -1px 5px rgba(255, 159, 168, 0.2);
+            color: #ff9fa8; /* Chữ hồng */
+            text-shadow: 2px 2px 8px rgba(255, 159, 168, 0.3);
             line-height: 1.3;
             opacity: 0;
             animation: fadeInZoom 2s ease-out forwards;
@@ -78,7 +78,7 @@
         .question-title {
             font-family: 'Dancing Script', cursive;
             font-size: clamp(1.8rem, 5vw, 4rem); 
-            color: #ff758c; 
+            color: #ff758c; /* Chữ hồng đậm hơn chút cho dễ đọc */
             line-height: 1.4;
         }
 
@@ -87,7 +87,7 @@
             max-width: 90vw;
             max-height: 35vh; 
             border-radius: 15px; 
-            box-shadow: 0px 10px 30px rgba(255, 159, 168, 0.4); 
+            box-shadow: 0px 10px 30px rgba(255, 159, 168, 0.2); 
             object-fit: contain;
             opacity: 0;
             animation: fadeInZoom 1.5s ease-out forwards; 
@@ -112,17 +112,17 @@
             .question-box { padding: 15px 15px; }
         }
 
-        /* Nút Đáp Án Tương Tác */
+        /* Nút Đáp Án (Nền trắng, viền hồng, chữ hồng) */
         .option-item {
             font-size: clamp(1.3rem, 3.5vw, 2.5rem);
-            color: #f48fb1;
+            color: #ff758c;
             padding: 12px 20px;
             border: 3px solid #ffb6c1; 
             border-radius: 50px; 
+            background-color: #ffffff;
             transition: all 0.3s ease;
             cursor: pointer;
-            background: white;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 10px rgba(255, 159, 168, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -132,15 +132,15 @@
         .option-item:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 15px rgba(255, 159, 168, 0.3);
-            background: #fff0f5;
+            background-color: #fff0f5; /* Lúc di chuột vào hơi ửng hồng chút xíu */
         }
 
         /* Trạng thái ĐÚNG / SAI */
         .option-item.correct {
             border-color: #66bb6a; 
             color: #66bb6a;
-            background: #e8f5e9;
-            box-shadow: 0 0 15px rgba(102, 187, 106, 0.5); 
+            background-color: #ffffff;
+            box-shadow: 0 0 15px rgba(102, 187, 106, 0.3); 
             transform: scale(1.05); 
             pointer-events: none; 
         }
@@ -148,11 +148,11 @@
         .option-item.incorrect {
             border-color: #ef5350; 
             color: #ef5350;
-            background: #ffebee;
+            background-color: #ffffff;
             animation: shake 0.4s; 
         }
 
-        /* Lời giải thích và Nút Tiếp theo */
+        /* Lời giải thích */
         .feedback-msg {
             margin-top: 20px;
             font-size: 1.3rem;
@@ -163,6 +163,7 @@
             animation: slideUp 0.5s ease forwards;
         }
 
+        /* Nút Tiếp theo (Nền trắng, viền hồng, chữ hồng) */
         .next-btn {
             margin-top: 15px;
             margin-bottom: 20px;
@@ -170,19 +171,21 @@
             font-size: 1.3rem;
             font-family: 'Quicksand', sans-serif;
             font-weight: 700;
-            color: white;
-            background: linear-gradient(45deg, #ff9fa8, #ff758c);
-            border: none;
+            color: #ff758c;
+            background-color: #ffffff;
+            border: 3px solid #ff758c;
             border-radius: 40px;
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(255, 117, 140, 0.4);
+            box-shadow: 0 5px 15px rgba(255, 117, 140, 0.2);
             display: none; 
             animation: slideUp 0.5s ease forwards;
-            transition: transform 0.2s;
+            transition: all 0.2s;
         }
 
         .next-btn:hover {
             transform: scale(1.1);
+            background-color: #ff758c;
+            color: #ffffff; /* Hover vào thì đảo ngược màu cho nổi bật */
         }
 
         /* Animation chuyển cảnh */
@@ -399,7 +402,6 @@
 
         document.body.addEventListener('click', function(e) {
             // Backup trong trường hợp trình duyệt chặn autoplay: 
-            // Ở lần click đầu tiên bất kỳ đâu, hệ thống sẽ gọi hàm play() để nhạc kêu lên
             if (bgMusic.paused) {
                 bgMusic.play().catch(error => console.log("Lỗi phát nhạc:", error));
             }
